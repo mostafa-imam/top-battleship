@@ -1,11 +1,11 @@
 export { Ship };
 
 class Ship {
-  #length = null;
-
-  length(num) {
+  constructor(num) {
     this.#length = num;
   }
+
+  #length = null;
 
   #hits = 0;
 
