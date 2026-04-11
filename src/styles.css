@@ -1,0 +1,208 @@
+@import url('https://fonts.googleapis.com/css2?family=Black+Ops+One&family=Noto+Sans:ital,wght@0,100..900;1,100..900&family=Outfit:wght@100..900&display=swap');
+
+/* variables */
+:root {
+    --color-white: #ffffff;
+    --color-1: #3BBCF8;
+    --color-2: #3E82F4;
+    --color-3: #254F71;
+    --color-4: #7F95B9;
+    --color-5: #060D1F;
+    --color-6: #010712;
+    --color-7: #030717;
+
+    --fs-1: 1rem;
+    --fs-2: 1.618rem;
+    --fs-3: 2.618rem;
+    --fs-4: 4.236rem;
+    --fs-5: 6.854rem;
+    --fs-small: 0.618rem;
+}
+
+/* reset */
+*,
+*::before,
+*::after {
+    box-sizing: border-box;
+}
+
+*:not(dialog) {
+    margin: 0;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+    html {
+        interpolate-size: allow-keywords;
+    }
+}
+
+body {
+    line-height: 1.5;
+    -webkit-font-smoothing: antialiased;
+}
+
+img,
+picture,
+video,
+canvas,
+svg {
+    display: block;
+    max-width: 100%;
+}
+
+input,
+button,
+textarea,
+select {
+    font: inherit;
+}
+
+p,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+    overflow-wrap: break-word;
+}
+
+p {
+    text-wrap: pretty;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+    text-wrap: balance;
+}
+
+#root,
+#__next {
+    isolation: isolate;
+}
+
+/* fonts */
+body {
+    font-family: system-ui, sans-serif;
+    font-weight: normal;
+}
+
+.project-name {
+    font-family: "Black Ops One", system-ui;
+    font-style: normal;
+    font-weight: 400;
+}
+
+.project-name {
+    font-size: var(--fs-4);
+}
+
+/* colors */
+body {
+    background: var(--color-7);
+    background: linear-gradient(90deg, var(--color-7) 13%, var(--color-5) 51%, var(--color-6) 100%);
+    color: var(--color-white);
+}
+
+/* page grid layout */
+
+.wrapper {
+    display: grid;
+    grid-template-columns: 4fr 2fr 1fr 2fr 4fr;
+}
+
+.project-name {
+    grid-column: 1/-1;
+    place-self: center;
+}
+
+.buttons-container {
+    grid-column: 1 / -1;
+    place-self: center;
+}
+
+.messages {
+    grid-column: 1 / -1;
+    place-self: center;
+}
+
+.player-gameboard-container {
+    grid-column: 2/3;
+}
+
+.computer-gameboard-container {
+    grid-column: 4/5;
+}
+
+.title {
+    text-align: center;
+    font-size: var(--fs-2);
+}
+
+/* buttons styles */
+.buttons-container {
+    margin-top: var(--fs-3);
+    display: flex;
+    gap: var(--fs-3);
+}
+
+.button {
+    background-color: var(--color-2);
+    border: 1px solid var(--color-3);
+    border-radius: 5px;
+    color: var(--color-white);
+    padding: calc(var(--fs-1)/2) var(--fs-small);
+    box-shadow: 0px 0px 10px var(--color-3);
+}
+
+.button:hover {
+    background-color: var(--color-1);
+    color: var(--color-7);
+    cursor: pointer;
+}
+
+/* messages styles */
+.messages {
+    margin-top: var(--fs-3);
+}
+
+/* gamebaord grid layout */
+
+.gameboard {
+    display: grid;
+    justify-content: space-between;
+    width: 475px;
+    grid-template-columns: repeat(10, 38px);
+    grid-template-rows: repeat(10, 38px);
+    gap: 5px;
+    background-color: #1e293bcc;
+    padding: 20px;
+    border-radius: 20px;
+    margin-top: var(--fs-2);
+    box-shadow: 18px 18px 25px var(--color-5),
+        -18px -18px 25px var(--color-6);
+}
+
+.box {
+    background-color: rgb(51, 65, 85);
+    color: var(--color-7);
+    border-radius: 8px;
+}
+
+.box:hover {
+    background-color: rgb(73, 93, 121);
+}
+
+/* small screens */
+@media only screen and (max-width: 1000px) {
+
+    .player-gameboard-container,
+    .computer-gameboard-container {
+        grid-column: 2/5;
+    }
+
+}
