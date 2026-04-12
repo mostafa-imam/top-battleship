@@ -128,13 +128,13 @@ class Gameboard {
 
     for (let item of this.#validHits) {
       if (item[0] === one && item[1] === two) {
-        return false;
+        return 'invalid';
       }
     }
 
     for (let item of this.#missedHits) {
       if (item[0] === one && item[1] === two) {
-        return false;
+        return 'invalid';
       }
     }
 
