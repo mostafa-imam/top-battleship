@@ -168,6 +168,7 @@ body {
 /* messages styles */
 .messages {
     margin-top: var(--fs-3);
+    margin-bottom: var(--fs-3);
 }
 
 /* gamebaord grid layout */
@@ -195,6 +196,26 @@ body {
 
 .box:hover {
     background-color: rgb(73, 93, 121);
+}
+
+.miss {
+    background-color: var(--color-4);
+}
+
+.miss:hover {
+    background-color: #8ca1c3;
+}
+
+.hit {
+    background-color: red;
+}
+
+.hit:hover {
+    background-color: rgb(238, 20, 20);
+}
+
+.ship-on-grid {
+    background-color: var(--color-1);
 }
 
 /* small screens */
