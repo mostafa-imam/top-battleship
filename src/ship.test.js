@@ -2,8 +2,7 @@ import { Ship } from "./ship.js";
 import { expect, test, describe } from "@jest/globals";
 
 describe("ship is sunk", () => {
-  const ship = new Ship();
-  ship.length(3);
+  const ship = new Ship(3);
 
   ship.hit();
   ship.hit();
@@ -15,8 +14,7 @@ describe("ship is sunk", () => {
 });
 
 describe("ship is not sunk", () => {
-  const ship = new Ship();
-  ship.length(3);
+  const ship = new Ship(4);
 
   ship.hit();
   ship.hit();
