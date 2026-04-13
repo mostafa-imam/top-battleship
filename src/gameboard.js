@@ -2,120 +2,10 @@ import { Ship } from "./ship.js";
 export { Gameboard };
 
 class Gameboard {
-  #playerShips = [
-    {
-      coordinates: [
-        [6, 9],
-        [7, 9],
-        [8, 9],
-        [9, 9],
-        [10, 9],
-      ],
-      ship: new Ship(5),
-      name: "carrier",
-    },
-    {
-      coordinates: [
-        [1, 7],
-        [2, 7],
-        [3, 7],
-        [4, 7],
-      ],
-      ship: new Ship(4),
-      name: "battleship",
-    },
-    {
-      coordinates: [
-        [3, 3],
-        [4, 3],
-        [5, 3],
-      ],
-      ship: new Ship(3),
-      name: "cruiser",
-    },
-    {
-      coordinates: [
-        [8, 5],
-        [9, 5],
-        [10, 5],
-      ],
-      ship: new Ship(3),
-      name: "submarine",
-    },
-    {
-      coordinates: [
-        [10, 2],
-        [10, 3],
-      ],
-      ship: new Ship(2),
-      name: "destroyer",
-    },
-  ];
-
-  #computerShips = [
-    {
-      coordinates: [
-        [9, 5],
-        [9, 6],
-        [9, 7],
-        [9, 8],
-        [9, 9],
-      ],
-      ship: new Ship(5),
-      name: "carrier",
-    },
-    {
-      coordinates: [
-        [5, 3],
-        [6, 3],
-        [7, 3],
-        [8, 3],
-      ],
-      ship: new Ship(4),
-      name: "battleship",
-    },
-    {
-      coordinates: [
-        [1, 3],
-        [2, 3],
-        [3, 3],
-      ],
-      ship: new Ship(3),
-      name: "cruiser",
-    },
-    {
-      coordinates: [
-        [4, 10],
-        [5, 10],
-        [6, 10],
-      ],
-      ship: new Ship(3),
-    },
-    {
-      coordinates: [
-        [2, 5],
-        [3, 5],
-      ],
-      ship: new Ship(2),
-      name: "destroyer",
-    },
-  ];
-
-  #placement = null;
+  #placement = this.#generateRandomShips();
 
   get shipsPlacements() {
     return this.#placement;
-  }
-
-  set shipsPlacements(name) {
-    if (typeof name !== "string") return;
-
-    if (name !== "computer") {
-      this.#placement = this.#playerShips;
-      return;
-    }
-
-    this.#placement = this.#computerShips;
   }
 
   #missedHits = [];
@@ -155,9 +45,102 @@ class Gameboard {
 
   isAllSunk() {
     for (let item of this.#placement) {
-      if (item.ship.isSunk() === false) return false;
+      if (!item.ship.isSunk()) return false;
     }
 
     return true;
+  }
+
+  #generateRandomShips() {
+    const allCoordinates = new Set();
+    const ships = [];
+
+    for (const length of [5, 4, 3, 3, 2]) {
+      let shipObj;
+      do {
+        shipObj = this.#generateOneShip(length);
+      } while (
+        shipObj.coordinates.some((c) => allCoordinates.has(c.toString()))
+      );
+
+      shipObj.coordinates.forEach((c) => allCoordinates.add(c.toString()));
+      ships.push(shipObj);
+    }
+
+    return ships;
+  }
+
+  #generateOneShip(length) {
+    let output = {
+      coordinates: [],
+      ship: new Ship(length),
+      position: this.#determinePosition(),
+    };
+
+    let startingPoint = this.#generateOneCoordinate();
+    output.coordinates.push(startingPoint);
+
+    let x = startingPoint[0];
+    let y = startingPoint[1];
+
+    if (output.position === "horizontal") {
+      let newY = y;
+      if (y + (length - 1) > 10) {
+        for (let i = 0; i < length - 1; i++) {
+          newY = newY - 1;
+          output.coordinates.push([x, newY]);
+        }
+      } else {
+        for (let i = 0; i < length - 1; i++) {
+          newY = newY + 1;
+          output.coordinates.push([x, newY]);
+        }
+      }
+    }
+
+    if (output.position === "vertical") {
+      let newX = x;
+      if (x + (length - 1) > 10) {
+        for (let i = 0; i < length - 1; i++) {
+          newX = newX - 1;
+          output.coordinates.push([newX, y]);
+        }
+      } else {
+        for (let i = 0; i < length - 1; i++) {
+          newX = newX + 1;
+          output.coordinates.push([newX, y]);
+        }
+      }
+    }
+
+    return output;
+  }
+
+  #generateOneCoordinate() {
+    let x = Math.ceil(Math.random() * 10);
+    let y = Math.ceil(Math.random() * 10);
+
+    return [x, y];
+  }
+
+  #determinePosition() {
+    let random = Math.floor(Math.random() * 2);
+
+    if (random === 0) {
+      return "horizontal";
+    } else {
+      return "vertical";
+    }
+  }
+
+  placeShip(length, coordinates) {
+    const ship = new Ship(length);
+
+    this.#placement = [
+      {
+        ship,
+        coordinates,
+      },
+    ];
   }
 }

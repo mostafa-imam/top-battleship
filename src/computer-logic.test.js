@@ -1,8 +1,8 @@
-import { computerMove } from "./computer-logic.js";
+import { populateComputerMove } from "./computer-logic.js";
 import { describe, test, expect } from "@jest/globals";
 
 describe("Computer To Attack", () => {
-  const coordinates = computerMove();
+  const coordinates = populateComputerMove();
 
   test("x is greater than 0 and less than 11", () => {
     expect(coordinates[0]).toBeGreaterThan(0);

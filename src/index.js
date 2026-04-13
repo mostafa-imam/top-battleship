@@ -8,29 +8,27 @@ import {
 import { Player } from "./player.js";
 import { populateComputerMove } from "./computer-logic.js";
 
-let message;
+let message = document.querySelector(".messages");
+let firstMessage = "Click on Randomize or start attacking right away...";
 let realPlayer;
 let computerPlayer;
 let attacker;
 let defender;
+let win = null;
 
 document.addEventListener("DOMContentLoaded", () => {
   realPlayer = new Player("player");
-  realPlayer.gameboard.shipsPlacements = "player";
-
   computerPlayer = new Player("computer");
-  computerPlayer.gameboard.shipsPlacements = "computer";
 
   attacker = realPlayer;
   defender = computerPlayer;
 
-  message = document.querySelector(".messages");
-  announcePlayer();
+  message.textContent = firstMessage;
 
   renderGrid(computerPlayer);
-  renderGrid(realPlayer);
+  //   renderShips(computerPlayer);
 
-  renderShips(computerPlayer);
+  renderGrid(realPlayer);
   renderShips(realPlayer);
 });
 
@@ -48,9 +46,10 @@ document.querySelector(".wrapper").addEventListener("click", (event) => {
 
   if (attack === "invalid") return;
 
-  if (announceWinner()) return;
-
+  if (win === true) return;
   renderBox(defender, target);
+
+  if (announceWinner()) return;
 
   switchPlayers();
   announcePlayer();
@@ -58,6 +57,24 @@ document.querySelector(".wrapper").addEventListener("click", (event) => {
   setTimeout(() => {
     computerToAttack();
   }, 1000);
+});
+
+document.querySelector(".random-button").addEventListener("click", () => {
+  realPlayer = new Player("player");
+  computerPlayer = new Player("computer");
+
+  attacker = realPlayer;
+  defender = computerPlayer;
+
+  message.textContent = firstMessage;
+
+  win = null;
+
+  renderGrid(computerPlayer);
+  renderGrid(realPlayer);
+
+  renderShips(realPlayer);
+  //   renderShips(computerPlayer);
 });
 
 function computerToAttack() {
@@ -72,9 +89,10 @@ function computerToAttack() {
     return;
   }
 
-  if (announceWinner()) return;
-
+  if (win === true) return;
   renderPlayerBox(x, y, attack);
+
+  if (announceWinner()) return;
 
   switchPlayers();
   announcePlayer();
@@ -82,9 +100,12 @@ function computerToAttack() {
 
 function announceWinner() {
   if (defender.gameboard.isAllSunk()) {
-    message.textContent = `${attacker.name} is the winner`;
+    win = true;
+    message.textContent = `${attacker.name} is the winner 🎉🎉🎉🎉🎉`;
     return true;
   }
+
+  return false;
 }
 
 function announcePlayer() {
