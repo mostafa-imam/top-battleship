@@ -1,5 +1,5 @@
-export { Player };
 import { Gameboard } from "./gameboard.js";
+export { Player };
 
 class Player {
   constructor(name) {

@@ -7,4 +7,9 @@ describe("Player constructor", () => {
 
     expect(player.name).toBe("John");
   });
+
+  test("player has its own gameboard", () => {
+    const player = new Player("John");
+    expect(player.gameboard).toBeDefined();
+  });
 });
